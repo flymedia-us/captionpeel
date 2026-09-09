@@ -1,0 +1,75 @@
+name: CaptionPeel
+options:
+  bundleIdPrefix: com.FlyMedia
+  deploymentTarget:
+    macOS: "15.0"
+  createIntermediateGroups: true
+
+targets:
+  CaptionPeel:
+    type: application
+    platform: macOS
+    sources:
+      - path: Sources/CaptionPeel
+      - path: CaptionPeel/Assets.xcassets
+      - path: CaptionPeel/PrivacyInfo.xcprivacy
+        buildPhase: resources
+      - path: LICENSE
+        buildPhase: resources
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.FlyMedia.CaptionPeel
+        PRODUCT_NAME: CaptionPeel
+        MARKETING_VERSION: "1.0.0"
+        CURRENT_PROJECT_VERSION: "1"
+        SWIFT_VERSION: "6.0"
+        MACOSX_DEPLOYMENT_TARGET: "15.0"
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_CFBundleDisplayName: CaptionPeel
+        INFOPLIST_KEY_NSHumanReadableCopyright: "© 2026 Fly Media LLC"
+        INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.utilities
+        INFOPLIST_KEY_ITSAppUsesNonExemptEncryption: NO
+        INFOPLIST_KEY_CFBundleDocumentTypes:
+          - CFBundleTypeName: Video
+            CFBundleTypeRole: Viewer
+            LSHandlerRank: Alternate
+            LSItemContentTypes:
+              - public.movie
+              - public.mpeg-4
+              - com.apple.quicktime-movie
+        CODE_SIGN_ENTITLEMENTS: CaptionPeel/CaptionPeel.entitlements
+        CODE_SIGN_STYLE: Automatic
+        DEVELOPMENT_TEAM: BJZSH247Q9
+        ENABLE_HARDENED_RUNTIME: YES
+        SWIFT_STRICT_CONCURRENCY: complete
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+
+  CaptionPeelTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - path: Tests/CaptionPeelTests
+    dependencies:
+      - target: CaptionPeel
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        SWIFT_VERSION: "6.0"
+        SWIFT_STRICT_CONCURRENCY: complete
+        CODE_SIGNING_ALLOWED: NO
+
+schemes:
+  CaptionPeel:
+    build:
+      targets:
+        CaptionPeel: all
+        CaptionPeelTests: [test]
+    run:
+      config: Debug
+    test:
+      config: Debug
+      targets:
+        - CaptionPeelTests
+    archive:
+      config: Release

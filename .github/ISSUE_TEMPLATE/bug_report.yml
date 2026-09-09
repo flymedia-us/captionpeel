@@ -1,0 +1,39 @@
+name: Bug report
+description: Report a reproducible CaptionPeel problem
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Please avoid attaching copyrighted or private video unless you have the right to share it.
+  - type: input
+    id: version
+    attributes:
+      label: CaptionPeel version
+      placeholder: 1.0.0 (1)
+    validations:
+      required: true
+  - type: input
+    id: macos
+    attributes:
+      label: macOS version and Mac model
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: Include what you expected and what occurred instead.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction steps
+    validations:
+      required: true
+  - type: textarea
+    id: footage
+    attributes:
+      label: Relevant footage details
+      description: Format, resolution, subtitle language/style, and whether the issue reproduces with a short shareable sample.

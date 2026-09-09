@@ -1,0 +1,26 @@
+# Swift Package Manager
+.build/
+.swiftpm/
+Package.resolved
+
+# Xcode
+*.xcodeproj/xcuserdata/
+*.xcodeproj/project.xcworkspace/xcuserdata/
+*.xcworkspace/xcuserdata/
+DerivedData/
+*.xcuserstate
+
+# macOS
+.DS_Store
+
+# Packaging output and private release credentials
+dist/
+*.dmg
+*.xcarchive
+AuthKey_*.p8
+
+# Local video fixtures may be copyrighted or private
+Fixtures/Private/
+*.mp4
+*.mov
+*.m4v

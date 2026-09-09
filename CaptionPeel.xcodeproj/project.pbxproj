@@ -1,0 +1,556 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		12978DCC096177B5ABAAB4B6 /* CaptionExtractionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07576C5E8A1F808250E5D8B3 /* CaptionExtractionEngine.swift */; };
+		1673660C92A34E95D8BE731B /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938BE424FBFB76656AFC63A0 /* RootView.swift */; };
+		1C7578251E50FBF1560857AC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1C3B3C69F353FEA9F270C250 /* Assets.xcassets */; };
+		21A0BF97A9BB6871B3A9C590 /* PlayerSurface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8856E98B89B133404AC4BED9 /* PlayerSurface.swift */; };
+		3620891158FB12D6F718824E /* VideoWorkspaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EFB8E5568FA1337F561774 /* VideoWorkspaceView.swift */; };
+		3DDCBABFD409DCB81AA54664 /* CaptionPeelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 417F81EE9823AEFAF0DA4456 /* CaptionPeelTests.swift */; };
+		48B630968034B1384E2C311B /* SRTExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51204A4D8EFABAD69606ECF /* SRTExporter.swift */; };
+		5879E28D67C64847A719AB9A /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260EAC13841DD8CD6101D8DA /* AppViewModel.swift */; };
+		5A415956CE1436265629832E /* CropSelectionOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = F145B00BE363EE4802B399CD /* CropSelectionOverlay.swift */; };
+		61B75B40780CB7F8E390FB9F /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 9DAACEAF9600BACDDAC9A875 /* LICENSE */; };
+		68A35942A44BCCC814B751B6 /* TextSimilarity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1907AB687CFEDF43B0CAB2BC /* TextSimilarity.swift */; };
+		696636B1CA2C467C60A88D8E /* CaptionCue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CAF2DA26543BEC42C5F310 /* CaptionCue.swift */; };
+		7C60ACD1457EC1BC04E2847C /* ResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F35F9C68AC263342001E67 /* ResultsView.swift */; };
+		7E8E5A1FE555036281A3D2A2 /* FrameFingerprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0315522A3AFE6567BAC50DD1 /* FrameFingerprint.swift */; };
+		7ECD8C1B4895DFA39B1B1297 /* Timecode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D269B113ED946581BA0EE2 /* Timecode.swift */; };
+		8A6E7E93BA91E2D6179F4F08 /* ExtractionIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D2C7CB8595B4F7D0FD1BBA /* ExtractionIntegrationTests.swift */; };
+		AEE8059CCB89B42CA7F7439E /* CaptionPeelApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBAE434A1CE99A69EC0CF99E /* CaptionPeelApp.swift */; };
+		BB2DE8D5492DB5927C8274DC /* OCRRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBF6B97BE8E13D0D8DD935A /* OCRRecognizer.swift */; };
+		FABAE2F887BDA66CC36164E6 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = CB1F0DEA5E8C98B1D8E83EB1 /* PrivacyInfo.xcprivacy */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		909863E1BB931B6BAD861A7D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 89AEE5DE59F4C2BA73D72CD1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CCFFA2A4C91AD5F5B32168A1;
+			remoteInfo = CaptionPeel;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0315522A3AFE6567BAC50DD1 /* FrameFingerprint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameFingerprint.swift; sourceTree = "<group>"; };
+		07576C5E8A1F808250E5D8B3 /* CaptionExtractionEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionExtractionEngine.swift; sourceTree = "<group>"; };
+		1907AB687CFEDF43B0CAB2BC /* TextSimilarity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextSimilarity.swift; sourceTree = "<group>"; };
+		1C3B3C69F353FEA9F270C250 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		260EAC13841DD8CD6101D8DA /* AppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewModel.swift; sourceTree = "<group>"; };
+		32D269B113ED946581BA0EE2 /* Timecode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timecode.swift; sourceTree = "<group>"; };
+		39EFB8E5568FA1337F561774 /* VideoWorkspaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoWorkspaceView.swift; sourceTree = "<group>"; };
+		417F81EE9823AEFAF0DA4456 /* CaptionPeelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionPeelTests.swift; sourceTree = "<group>"; };
+		47CAF2DA26543BEC42C5F310 /* CaptionCue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionCue.swift; sourceTree = "<group>"; };
+		49F35F9C68AC263342001E67 /* ResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsView.swift; sourceTree = "<group>"; };
+		5342B7177B35CA917381AD59 /* CaptionPeel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CaptionPeel.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8856E98B89B133404AC4BED9 /* PlayerSurface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerSurface.swift; sourceTree = "<group>"; };
+		938BE424FBFB76656AFC63A0 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		9DAACEAF9600BACDDAC9A875 /* LICENSE */ = {isa = PBXFileReference; path = LICENSE; sourceTree = "<group>"; };
+		C51204A4D8EFABAD69606ECF /* SRTExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SRTExporter.swift; sourceTree = "<group>"; };
+		C7B82D7BB9A7EEAF007F0A36 /* CaptionPeelTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CaptionPeelTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CB1F0DEA5E8C98B1D8E83EB1 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		DCBF6B97BE8E13D0D8DD935A /* OCRRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRRecognizer.swift; sourceTree = "<group>"; };
+		F145B00BE363EE4802B399CD /* CropSelectionOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropSelectionOverlay.swift; sourceTree = "<group>"; };
+		F7D2C7CB8595B4F7D0FD1BBA /* ExtractionIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtractionIntegrationTests.swift; sourceTree = "<group>"; };
+		FBAE434A1CE99A69EC0CF99E /* CaptionPeelApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionPeelApp.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		035E2F28129534B346CD5F51 /* CaptionPeelTests */ = {
+			isa = PBXGroup;
+			children = (
+				417F81EE9823AEFAF0DA4456 /* CaptionPeelTests.swift */,
+				F7D2C7CB8595B4F7D0FD1BBA /* ExtractionIntegrationTests.swift */,
+			);
+			path = CaptionPeelTests;
+			sourceTree = "<group>";
+		};
+		29CD33701B8160F91EF226B6 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				035E2F28129534B346CD5F51 /* CaptionPeelTests */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		51A356AAD2BE75E2F515CB8F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				47CAF2DA26543BEC42C5F310 /* CaptionCue.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		5D3AFC579D9E5D9DC59092E5 = {
+			isa = PBXGroup;
+			children = (
+				9DAACEAF9600BACDDAC9A875 /* LICENSE */,
+				C0273F44BC9A1E6CAF7F5A2D /* CaptionPeel */,
+				8F3DCC5CF84F45866F34ECB3 /* Sources */,
+				29CD33701B8160F91EF226B6 /* Tests */,
+				853B3E87F9ACC704AA625D7B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		819412BC7046CA3525BA4018 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F145B00BE363EE4802B399CD /* CropSelectionOverlay.swift */,
+				8856E98B89B133404AC4BED9 /* PlayerSurface.swift */,
+				49F35F9C68AC263342001E67 /* ResultsView.swift */,
+				938BE424FBFB76656AFC63A0 /* RootView.swift */,
+				39EFB8E5568FA1337F561774 /* VideoWorkspaceView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		853B3E87F9ACC704AA625D7B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5342B7177B35CA917381AD59 /* CaptionPeel.app */,
+				C7B82D7BB9A7EEAF007F0A36 /* CaptionPeelTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8C8EC110B491C8574BF8B685 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				07576C5E8A1F808250E5D8B3 /* CaptionExtractionEngine.swift */,
+				0315522A3AFE6567BAC50DD1 /* FrameFingerprint.swift */,
+				DCBF6B97BE8E13D0D8DD935A /* OCRRecognizer.swift */,
+				C51204A4D8EFABAD69606ECF /* SRTExporter.swift */,
+				1907AB687CFEDF43B0CAB2BC /* TextSimilarity.swift */,
+				32D269B113ED946581BA0EE2 /* Timecode.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		8F3DCC5CF84F45866F34ECB3 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				F99494F724CEB4C65101D6E7 /* CaptionPeel */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		C0273F44BC9A1E6CAF7F5A2D /* CaptionPeel */ = {
+			isa = PBXGroup;
+			children = (
+				1C3B3C69F353FEA9F270C250 /* Assets.xcassets */,
+				CB1F0DEA5E8C98B1D8E83EB1 /* PrivacyInfo.xcprivacy */,
+			);
+			path = CaptionPeel;
+			sourceTree = "<group>";
+		};
+		CFF951D9F5528DF41E2CEA0A /* App */ = {
+			isa = PBXGroup;
+			children = (
+				260EAC13841DD8CD6101D8DA /* AppViewModel.swift */,
+				FBAE434A1CE99A69EC0CF99E /* CaptionPeelApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		F99494F724CEB4C65101D6E7 /* CaptionPeel */ = {
+			isa = PBXGroup;
+			children = (
+				CFF951D9F5528DF41E2CEA0A /* App */,
+				51A356AAD2BE75E2F515CB8F /* Models */,
+				8C8EC110B491C8574BF8B685 /* Services */,
+				819412BC7046CA3525BA4018 /* Views */,
+			);
+			path = CaptionPeel;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B2843DE9E0F38267CB26F806 /* CaptionPeelTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EB133FB5D235358C4D988DE6 /* Build configuration list for PBXNativeTarget "CaptionPeelTests" */;
+			buildPhases = (
+				70A3BCF0DE3653D43F507EF7 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				25950F8E3F01EA234E4CAD00 /* PBXTargetDependency */,
+			);
+			name = CaptionPeelTests;
+			packageProductDependencies = (
+			);
+			productName = CaptionPeelTests;
+			productReference = C7B82D7BB9A7EEAF007F0A36 /* CaptionPeelTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		CCFFA2A4C91AD5F5B32168A1 /* CaptionPeel */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BFCF51E659CFCAF653F3F651 /* Build configuration list for PBXNativeTarget "CaptionPeel" */;
+			buildPhases = (
+				4BDBAA6531C1F9E8B09DA050 /* Sources */,
+				3DBBFCAEF37EC036B4229B75 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CaptionPeel;
+			packageProductDependencies = (
+			);
+			productName = CaptionPeel;
+			productReference = 5342B7177B35CA917381AD59 /* CaptionPeel.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		89AEE5DE59F4C2BA73D72CD1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					CCFFA2A4C91AD5F5B32168A1 = {
+						DevelopmentTeam = BJZSH247Q9;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 22379B5E8218102D23342679 /* Build configuration list for PBXProject "CaptionPeel" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 5D3AFC579D9E5D9DC59092E5;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 853B3E87F9ACC704AA625D7B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CCFFA2A4C91AD5F5B32168A1 /* CaptionPeel */,
+				B2843DE9E0F38267CB26F806 /* CaptionPeelTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		3DBBFCAEF37EC036B4229B75 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1C7578251E50FBF1560857AC /* Assets.xcassets in Resources */,
+				61B75B40780CB7F8E390FB9F /* LICENSE in Resources */,
+				FABAE2F887BDA66CC36164E6 /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4BDBAA6531C1F9E8B09DA050 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5879E28D67C64847A719AB9A /* AppViewModel.swift in Sources */,
+				696636B1CA2C467C60A88D8E /* CaptionCue.swift in Sources */,
+				12978DCC096177B5ABAAB4B6 /* CaptionExtractionEngine.swift in Sources */,
+				AEE8059CCB89B42CA7F7439E /* CaptionPeelApp.swift in Sources */,
+				5A415956CE1436265629832E /* CropSelectionOverlay.swift in Sources */,
+				7E8E5A1FE555036281A3D2A2 /* FrameFingerprint.swift in Sources */,
+				BB2DE8D5492DB5927C8274DC /* OCRRecognizer.swift in Sources */,
+				21A0BF97A9BB6871B3A9C590 /* PlayerSurface.swift in Sources */,
+				7C60ACD1457EC1BC04E2847C /* ResultsView.swift in Sources */,
+				1673660C92A34E95D8BE731B /* RootView.swift in Sources */,
+				48B630968034B1384E2C311B /* SRTExporter.swift in Sources */,
+				68A35942A44BCCC814B751B6 /* TextSimilarity.swift in Sources */,
+				7ECD8C1B4895DFA39B1B1297 /* Timecode.swift in Sources */,
+				3620891158FB12D6F718824E /* VideoWorkspaceView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		70A3BCF0DE3653D43F507EF7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3DDCBABFD409DCB81AA54664 /* CaptionPeelTests.swift in Sources */,
+				8A6E7E93BA91E2D6179F4F08 /* ExtractionIntegrationTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		25950F8E3F01EA234E4CAD00 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CCFFA2A4C91AD5F5B32168A1 /* CaptionPeel */;
+			targetProxy = 909863E1BB931B6BAD861A7D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		22FDF983A88823D6E8383ED1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGNING_ALLOWED = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.FlyMedia.CaptionPeelTests;
+				SDKROOT = macosx;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CaptionPeel.app/Contents/MacOS/CaptionPeel";
+			};
+			name = Release;
+		};
+		6715239F475031A4A661587A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGNING_ALLOWED = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.FlyMedia.CaptionPeelTests;
+				SDKROOT = macosx;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CaptionPeel.app/Contents/MacOS/CaptionPeel";
+			};
+			name = Debug;
+		};
+		73DF8C508BD4F60F86F5A6EA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = CaptionPeel/CaptionPeel.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = BJZSH247Q9;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = CaptionPeel;
+				INFOPLIST_KEY_CFBundleDocumentTypes = "[[\"CFBundleTypeRole\": \"Viewer\", \"LSItemContentTypes\": [\"public.movie\", \"public.mpeg-4\", \"com.apple.quicktime-movie\"], \"CFBundleTypeName\": \"Video\", \"LSHandlerRank\": \"Alternate\"]]";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2026 Fly Media LLC";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.FlyMedia.CaptionPeel;
+				PRODUCT_NAME = CaptionPeel;
+				SDKROOT = macosx;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		96286EB1F6505F423DD4F8ED /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = CaptionPeel/CaptionPeel.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = BJZSH247Q9;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = CaptionPeel;
+				INFOPLIST_KEY_CFBundleDocumentTypes = "[[\"CFBundleTypeRole\": \"Viewer\", \"LSItemContentTypes\": [\"public.movie\", \"public.mpeg-4\", \"com.apple.quicktime-movie\"], \"CFBundleTypeName\": \"Video\", \"LSHandlerRank\": \"Alternate\"]]";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2026 Fly Media LLC";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.FlyMedia.CaptionPeel;
+				PRODUCT_NAME = CaptionPeel;
+				SDKROOT = macosx;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		DC6A80565E538ACB5AE1E0BF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		EB12DE8208D5C589D3A6BDCA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		22379B5E8218102D23342679 /* Build configuration list for PBXProject "CaptionPeel" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC6A80565E538ACB5AE1E0BF /* Debug */,
+				EB12DE8208D5C589D3A6BDCA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		BFCF51E659CFCAF653F3F651 /* Build configuration list for PBXNativeTarget "CaptionPeel" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				73DF8C508BD4F60F86F5A6EA /* Debug */,
+				96286EB1F6505F423DD4F8ED /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		EB133FB5D235358C4D988DE6 /* Build configuration list for PBXNativeTarget "CaptionPeelTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6715239F475031A4A661587A /* Debug */,
+				22FDF983A88823D6E8383ED1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 89AEE5DE59F4C2BA73D72CD1 /* Project object */;
+}

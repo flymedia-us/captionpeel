@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    name: Swift tests
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v5
+      - name: Run tests
+        run: swift test
+
+  build:
+    name: App target (Release)
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Build app target
+        run: |
+          xcodebuild \
+            -project CaptionPeel.xcodeproj \
+            -scheme CaptionPeel \
+            -configuration Release \
+            -destination 'platform=macOS' \
+            -derivedDataPath "$RUNNER_TEMP/DerivedData" \
+            CODE_SIGNING_ALLOWED=NO \
+            build
+
+      - name: Package unsigned DMG
+        run: |
+          APP=$(find "$RUNNER_TEMP/DerivedData" -path '*/Build/Products/Release/CaptionPeel.app' -type d | head -n 1)
+          if [[ -z "$APP" ]]; then
+            echo "error: Release CaptionPeel.app not found under DerivedData" >&2
+            exit 1
+          fi
+          scripts/package-dmg.sh "$APP" dist/CaptionPeel-ci-unsigned.dmg
+
+      - name: Upload unsigned DMG
+        uses: actions/upload-artifact@v4
+        with:
+          name: CaptionPeel-ci-unsigned-dmg
+          path: dist/CaptionPeel-ci-unsigned.dmg
+          if-no-files-found: error
