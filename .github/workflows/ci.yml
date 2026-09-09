@@ -41,7 +41,7 @@ jobs:
           scripts/package-dmg.sh "$APP" dist/CaptionPeel-ci-unsigned.dmg
 
       - name: Upload unsigned DMG
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: CaptionPeel-ci-unsigned-dmg
           path: dist/CaptionPeel-ci-unsigned.dmg
