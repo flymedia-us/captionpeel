@@ -5,7 +5,7 @@ struct CaptionPeelApp: App {
     @StateObject private var model = AppViewModel()
 
     var body: some Scene {
-        WindowGroup {
+        WindowGroup("CaptionPeel") {
             RootView()
                 .environmentObject(model)
                 .frame(minWidth: 920, minHeight: 620)

@@ -2,7 +2,8 @@ import SwiftUI
 
 struct CropSelectionOverlay: View {
     @Binding var selection: NormalizedRect
-    @State private var dragStart: NormalizedRect?
+    @State private var moveStart: NormalizedRect?
+    @State private var resizeStart: NormalizedRect?
 
     var body: some View {
         GeometryReader { geometry in
@@ -17,17 +18,21 @@ struct CropSelectionOverlay: View {
             ZStack(alignment: .topLeading) {
                 dimmedArea(around: crop, in: size)
 
+                // Position the hit target and border in the same coordinate space.
+                // Applying an overlay after `offset` leaves the overlay at the
+                // GeometryReader origin on macOS.
                 Rectangle()
-                    .fill(.clear)
+                    .fill(Color.clear)
                     .contentShape(Rectangle())
                     .frame(width: crop.width, height: crop.height)
-                    .offset(x: crop.minX, y: crop.minY)
-                    .overlay(alignment: .topLeading) {
-                        Rectangle()
-                            .stroke(Color.accentColor, lineWidth: 2)
-                            .frame(width: crop.width, height: crop.height)
-                    }
+                    .position(x: crop.midX, y: crop.midY)
                     .gesture(moveGesture(in: size))
+
+                Rectangle()
+                    .stroke(Color.accentColor, lineWidth: 2)
+                    .frame(width: crop.width, height: crop.height)
+                    .position(x: crop.midX, y: crop.midY)
+                    .allowsHitTesting(false)
 
                 handle(.topLeft, at: CGPoint(x: crop.minX, y: crop.minY), size: size)
                 handle(.topRight, at: CGPoint(x: crop.maxX, y: crop.minY), size: size)
@@ -56,10 +61,10 @@ struct CropSelectionOverlay: View {
     }
 
     private func moveGesture(in size: CGSize) -> some Gesture {
-        DragGesture()
+        DragGesture(minimumDistance: 0)
             .onChanged { value in
-                if dragStart == nil { dragStart = selection }
-                guard let start = dragStart, size.width > 0, size.height > 0 else { return }
+                if moveStart == nil { moveStart = selection }
+                guard let start = moveStart, size.width > 0, size.height > 0 else { return }
                 selection = NormalizedRect(
                     x: start.x + value.translation.width / size.width,
                     y: start.y + value.translation.height / size.height,
@@ -67,25 +72,28 @@ struct CropSelectionOverlay: View {
                     height: start.height
                 ).clamped()
             }
-            .onEnded { _ in dragStart = nil }
+            .onEnded { _ in moveStart = nil }
     }
 
     private func handle(_ corner: Corner, at point: CGPoint, size: CGSize) -> some View {
-        Circle()
-            .fill(Color.accentColor)
-            .overlay(Circle().stroke(.white, lineWidth: 1.5))
-            .frame(width: 14, height: 14)
+        ZStack {
+            Circle()
+                .fill(Color.accentColor)
+                .overlay(Circle().stroke(.white, lineWidth: 1.5))
+                .frame(width: 14, height: 14)
+        }
+            .frame(width: 28, height: 28)
+            .contentShape(Rectangle())
             .position(point)
-            .contentShape(Rectangle().inset(by: -8))
             .gesture(resizeGesture(corner, in: size))
             .accessibilityLabel("Resize caption region")
     }
 
     private func resizeGesture(_ corner: Corner, in size: CGSize) -> some Gesture {
-        DragGesture()
+        DragGesture(minimumDistance: 0)
             .onChanged { value in
-                if dragStart == nil { dragStart = selection }
-                guard let start = dragStart, size.width > 0, size.height > 0 else { return }
+                if resizeStart == nil { resizeStart = selection }
+                guard let start = resizeStart, size.width > 0, size.height > 0 else { return }
                 let dx = value.translation.width / size.width
                 let dy = value.translation.height / size.height
                 let minSize = 0.04
@@ -113,7 +121,7 @@ struct CropSelectionOverlay: View {
                 }
                 selection = next.clamped()
             }
-            .onEnded { _ in dragStart = nil }
+            .onEnded { _ in resizeStart = nil }
     }
 
     private enum Corner {

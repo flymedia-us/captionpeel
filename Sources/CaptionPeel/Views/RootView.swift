@@ -19,14 +19,6 @@ struct RootView: View {
         }
         .background(Color(nsColor: .windowBackgroundColor))
         .toolbar {
-            ToolbarItem(placement: .navigation) {
-                HStack(spacing: 8) {
-                    Image(systemName: "captions.bubble.fill")
-                        .foregroundStyle(Color.accentColor)
-                    Text("CaptionPeel")
-                        .fontWeight(.semibold)
-                }
-            }
             ToolbarItem(placement: .primaryAction) {
                 Button("Open Video…") { model.presentOpenPanel() }
             }

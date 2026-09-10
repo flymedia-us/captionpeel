@@ -26,7 +26,7 @@ final class CaptionExtractionEngine: @unchecked Sendable {
     init(
         videoURL: URL,
         recognizer: any OCRRecognizing = VisionOCRRecognizer(),
-        sampleInterval: TimeInterval = 0.5
+        sampleInterval: TimeInterval = 0.25
     ) {
         asset = AVURLAsset(url: videoURL)
         self.recognizer = recognizer
@@ -42,20 +42,24 @@ final class CaptionExtractionEngine: @unchecked Sendable {
         let assetDuration = try await asset.load(.duration).seconds
         guard assetDuration.isFinite, assetDuration > 0 else { throw ExtractionError.invalidDuration }
 
+        let videoTiming = try await loadVideoTiming(fallbackDuration: assetDuration)
+        let videoDuration = videoTiming.duration
+
         let start = max(0, requestedRange?.lowerBound ?? 0)
-        let end = min(assetDuration, requestedRange?.upperBound ?? assetDuration)
+        let end = min(videoDuration, requestedRange?.upperBound ?? videoDuration)
         guard end > start else { throw ExtractionError.invalidDuration }
 
         let generator = makeGenerator()
         var accumulator = CueAccumulator()
         var previousFingerprint: FrameFingerprint?
+        var previousObservation: TimedOCRResult?
         var lastOCRTime = start - 10
         var time = start
 
-        while time <= end + 0.0001 {
+        while true {
             try Task.checkCancellation()
-            let image = try await frame(at: time, using: generator)
-            guard let cropped = crop(image, to: region) else {
+            let frame = try await frame(at: time, using: generator)
+            guard let cropped = crop(frame.image, to: region) else {
                 throw ExtractionError.frameUnavailable
             }
 
@@ -70,15 +74,27 @@ final class CaptionExtractionEngine: @unchecked Sendable {
             if imageChanged || time - lastOCRTime >= 2.0 {
                 try Task.checkCancellation()
                 let result = try await recognizer.recognizeText(in: cropped)
-                let boundary = max(start, (lastOCRTime + time) / 2)
+                let boundary: TimeInterval
+                if let previousObservation,
+                   !sameCaption(previousObservation.result, result) {
+                    boundary = try await refineBoundary(
+                        from: previousObservation,
+                        to: TimedOCRResult(time: frame.time, result: result),
+                        region: region,
+                        generator: generator,
+                        frameDuration: videoTiming.frameDuration
+                    )
+                } else {
+                    boundary = previousObservation == nil ? start : time
+                }
                 accumulator.observe(
                     result: result,
-                    at: time,
-                    estimatedBoundary: lastOCRTime < start ? time : boundary,
-                    sampleInterval: sampleInterval
+                    at: frame.time,
+                    estimatedBoundary: boundary
                 )
                 lastOCRTime = time
                 previousFingerprint = fingerprint
+                previousObservation = TimedOCRResult(time: frame.time, result: result)
             }
 
             let fraction = min(1, (time - start) / (end - start))
@@ -88,7 +104,8 @@ final class CaptionExtractionEngine: @unchecked Sendable {
                 currentTime: time,
                 duration: end - start
             ))
-            time += sampleInterval
+            if time >= end { break }
+            time = min(end, time + sampleInterval)
         }
 
         progress(ExtractionProgress(fraction: 1, phase: .finishing, currentTime: end, duration: end - start))
@@ -98,23 +115,84 @@ final class CaptionExtractionEngine: @unchecked Sendable {
 
     func recognize(at seconds: TimeInterval, region: NormalizedRect) async throws -> OCRResult {
         let generator = makeGenerator()
-        let image = try await frame(at: seconds, using: generator)
-        guard let cropped = crop(image, to: region) else { throw ExtractionError.frameUnavailable }
+        let frame = try await frame(at: seconds, using: generator)
+        guard let cropped = crop(frame.image, to: region) else { throw ExtractionError.frameUnavailable }
         return try await recognizer.recognizeText(in: cropped)
     }
 
     private func makeGenerator() -> AVAssetImageGenerator {
         let generator = AVAssetImageGenerator(asset: asset)
         generator.appliesPreferredTrackTransform = true
-        generator.requestedTimeToleranceBefore = CMTime(seconds: 0.04, preferredTimescale: 600)
-        generator.requestedTimeToleranceAfter = CMTime(seconds: 0.04, preferredTimescale: 600)
+        generator.requestedTimeToleranceBefore = .zero
+        generator.requestedTimeToleranceAfter = .zero
         return generator
     }
 
-    private func frame(at seconds: TimeInterval, using generator: AVAssetImageGenerator) async throws -> CGImage {
+    private func loadVideoTiming(fallbackDuration: TimeInterval) async throws -> VideoTiming {
+        guard let track = try await asset.loadTracks(withMediaType: .video).first else {
+            throw ExtractionError.frameUnavailable
+        }
+        let timeRange = try await track.load(.timeRange)
+        let minFrameDuration = try await track.load(.minFrameDuration).seconds
+        let nominalFrameRate = Double(try await track.load(.nominalFrameRate))
+        let frameDuration: TimeInterval
+        if minFrameDuration.isFinite, minFrameDuration > 0 {
+            frameDuration = minFrameDuration
+        } else if nominalFrameRate.isFinite, nominalFrameRate > 0 {
+            frameDuration = 1 / nominalFrameRate
+        } else {
+            frameDuration = 1 / 30
+        }
+        let trackEnd = timeRange.end.seconds
+        let duration = trackEnd.isFinite && trackEnd > 0 ? min(trackEnd, fallbackDuration) : fallbackDuration
+        return VideoTiming(duration: duration, frameDuration: frameDuration)
+    }
+
+    private func refineBoundary(
+        from previous: TimedOCRResult,
+        to current: TimedOCRResult,
+        region: NormalizedRect,
+        generator: AVAssetImageGenerator,
+        frameDuration: TimeInterval
+    ) async throws -> TimeInterval {
+        var earlier = previous.time
+        var later = current.time
+        let targetAccuracy = max(frameDuration, 0.001)
+
+        while later - earlier > targetAccuracy {
+            try Task.checkCancellation()
+            let midpoint = (earlier + later) / 2
+            let frame = try await frame(at: midpoint, using: generator)
+            guard frame.time > earlier, frame.time < later else { break }
+            guard let cropped = crop(frame.image, to: region) else {
+                throw ExtractionError.frameUnavailable
+            }
+            let result = try await recognizer.recognizeText(in: cropped)
+            if sameCaption(result, current.result) {
+                later = frame.time
+            } else {
+                earlier = frame.time
+            }
+        }
+
+        return later
+    }
+
+    private func sameCaption(_ lhs: OCRResult, _ rhs: OCRResult) -> Bool {
+        let left = lhs.text.trimmingCharacters(in: .whitespacesAndNewlines)
+        let right = rhs.text.trimmingCharacters(in: .whitespacesAndNewlines)
+        if left.isEmpty || right.isEmpty { return left.isEmpty && right.isEmpty }
+        return TextSimilarity.score(left, right) >= 0.78
+    }
+
+    private func frame(at seconds: TimeInterval, using generator: AVAssetImageGenerator) async throws -> VideoFrame {
         let time = CMTime(seconds: seconds, preferredTimescale: 600)
-        let (image, _) = try await generator.image(at: time)
-        return image
+        let (image, actualTime) = try await generator.image(at: time)
+        let actualSeconds = actualTime.seconds
+        return VideoFrame(
+            image: image,
+            time: actualSeconds.isFinite ? actualSeconds : seconds
+        )
     }
 
     private func crop(_ image: CGImage, to normalizedRegion: NormalizedRect) -> CGImage? {
@@ -132,6 +210,21 @@ final class CaptionExtractionEngine: @unchecked Sendable {
     }
 }
 
+private struct VideoTiming {
+    var duration: TimeInterval
+    var frameDuration: TimeInterval
+}
+
+private struct VideoFrame {
+    var image: CGImage
+    var time: TimeInterval
+}
+
+private struct TimedOCRResult {
+    var time: TimeInterval
+    var result: OCRResult
+}
+
 private struct CueAccumulator {
     private struct ActiveCue {
         var start: TimeInterval
@@ -146,8 +239,7 @@ private struct CueAccumulator {
     mutating func observe(
         result: OCRResult,
         at time: TimeInterval,
-        estimatedBoundary: TimeInterval,
-        sampleInterval: TimeInterval
+        estimatedBoundary: TimeInterval
     ) {
         let text = result.text.trimmingCharacters(in: .whitespacesAndNewlines)
 
@@ -180,7 +272,7 @@ private struct CueAccumulator {
 
     mutating private func closeActive(at time: TimeInterval) {
         guard let current = active else { return }
-        let end = max(current.start + 0.2, time)
+        let end = max(current.start, time)
         cues.append(CaptionCue(
             start: current.start,
             end: end,
@@ -191,21 +283,8 @@ private struct CueAccumulator {
     }
 
     func cleanedCues() -> [CaptionCue] {
-        var cleaned: [CaptionCue] = []
-        for cue in cues where cue.duration >= 0.2 {
-            if var previous = cleaned.last,
-               cue.start - previous.end <= 0.75,
-               TextSimilarity.score(previous.text, cue.text) >= 0.78 {
-                previous.end = cue.end
-                if cue.confidence > previous.confidence {
-                    previous.text = cue.text
-                    previous.confidence = cue.confidence
-                }
-                cleaned[cleaned.count - 1] = previous
-            } else {
-                cleaned.append(cue)
-            }
-        }
-        return cleaned
+        // Keep real blank intervals intact. Merging matching text across a gap
+        // makes an exported cue start or end when no caption is on screen.
+        cues.filter { $0.duration >= 0.2 }
     }
 }

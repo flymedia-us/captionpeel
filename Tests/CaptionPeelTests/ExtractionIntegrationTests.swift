@@ -28,6 +28,29 @@ final class ExtractionIntegrationTests: XCTestCase {
             "Expected a cue containing ‘guet’; got \(cues.map(\.text))"
         )
         XCTAssertTrue(cues.allSatisfy { $0.end > $0.start })
+        XCTAssertEqual(cues[0].start, 1, accuracy: 0.05)
+        XCTAssertEqual(cues[0].end, 3, accuracy: 0.05)
+        XCTAssertEqual(cues[1].start, 3, accuracy: 0.05)
+        XCTAssertEqual(cues[1].end, 5, accuracy: 0.05)
+    }
+
+    func testClientClipWhenProvided() async throws {
+        guard let path = ProcessInfo.processInfo.environment["CAPTIONPEEL_CLIENT_FIXTURE"] else {
+            throw XCTSkip("Set CAPTIONPEEL_CLIENT_FIXTURE to run the private client-clip smoke test.")
+        }
+
+        let url = URL(fileURLWithPath: path)
+        let engine = CaptionExtractionEngine(videoURL: url)
+        let cues = try await engine.extract(region: .suggestedCaptionRegion) { _ in }
+
+        let duration = try await AVURLAsset(url: url).load(.duration).seconds
+
+        XCTAssertFalse(cues.isEmpty)
+        XCTAssertTrue(cues.allSatisfy { $0.start >= 0 && $0.end > $0.start })
+        XCTAssertTrue(cues.allSatisfy { $0.end <= duration })
+        for cue in cues {
+            print("\(Timecode.string(from: cue.start)) --> \(Timecode.string(from: cue.end)) | \(cue.text.replacingOccurrences(of: "\n", with: " / "))")
+        }
     }
 }
 
