@@ -12,6 +12,8 @@ targets:
     sources:
       - path: Sources/CaptionPeel
       - path: CaptionPeel/Assets.xcassets
+      - path: Icon/Caption Peel Icon.icon
+        buildPhase: resources
       - path: CaptionPeel/PrivacyInfo.xcprivacy
         buildPhase: resources
       - path: LICENSE
@@ -42,7 +44,7 @@ targets:
         DEVELOPMENT_TEAM: BJZSH247Q9
         ENABLE_HARDENED_RUNTIME: YES
         SWIFT_STRICT_CONCURRENCY: complete
-        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_APPICON_NAME: "Caption Peel Icon"
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
 
   CaptionPeelTests:

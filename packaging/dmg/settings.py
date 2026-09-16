@@ -1,6 +1,5 @@
 app = defines["app"]
 background = defines["background"]
-icon = defines["icon"]
 
 files = [app]
 symlinks = {"Applications": "/Applications"}

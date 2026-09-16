@@ -12,6 +12,7 @@
 		1C7578251E50FBF1560857AC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1C3B3C69F353FEA9F270C250 /* Assets.xcassets */; };
 		21A0BF97A9BB6871B3A9C590 /* PlayerSurface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8856E98B89B133404AC4BED9 /* PlayerSurface.swift */; };
 		3620891158FB12D6F718824E /* VideoWorkspaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EFB8E5568FA1337F561774 /* VideoWorkspaceView.swift */; };
+		385DE5FFB41D967940266683 /* Caption Peel Icon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 0A6CAE7C00966ECB8352DF7A /* Caption Peel Icon.icon */; };
 		3DDCBABFD409DCB81AA54664 /* CaptionPeelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 417F81EE9823AEFAF0DA4456 /* CaptionPeelTests.swift */; };
 		48B630968034B1384E2C311B /* SRTExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51204A4D8EFABAD69606ECF /* SRTExporter.swift */; };
 		5879E28D67C64847A719AB9A /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260EAC13841DD8CD6101D8DA /* AppViewModel.swift */; };
@@ -41,6 +42,7 @@
 /* Begin PBXFileReference section */
 		0315522A3AFE6567BAC50DD1 /* FrameFingerprint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameFingerprint.swift; sourceTree = "<group>"; };
 		07576C5E8A1F808250E5D8B3 /* CaptionExtractionEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionExtractionEngine.swift; sourceTree = "<group>"; };
+		0A6CAE7C00966ECB8352DF7A /* Caption Peel Icon.icon */ = {isa = PBXFileReference; lastKnownFileType = wrapper.icon; path = "Caption Peel Icon.icon"; sourceTree = "<group>"; };
 		1907AB687CFEDF43B0CAB2BC /* TextSimilarity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextSimilarity.swift; sourceTree = "<group>"; };
 		1C3B3C69F353FEA9F270C250 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		260EAC13841DD8CD6101D8DA /* AppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewModel.swift; sourceTree = "<group>"; };
@@ -63,6 +65,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
+		02628C440285F58BB858BAC2 /* Icon */ = {
+			isa = PBXGroup;
+			children = (
+				0A6CAE7C00966ECB8352DF7A /* Caption Peel Icon.icon */,
+			);
+			path = Icon;
+			sourceTree = "<group>";
+		};
 		035E2F28129534B346CD5F51 /* CaptionPeelTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -93,6 +103,7 @@
 			children = (
 				9DAACEAF9600BACDDAC9A875 /* LICENSE */,
 				C0273F44BC9A1E6CAF7F5A2D /* CaptionPeel */,
+				02628C440285F58BB858BAC2 /* Icon */,
 				8F3DCC5CF84F45866F34ECB3 /* Sources */,
 				29CD33701B8160F91EF226B6 /* Tests */,
 				853B3E87F9ACC704AA625D7B /* Products */,
@@ -250,6 +261,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1C7578251E50FBF1560857AC /* Assets.xcassets in Resources */,
+				385DE5FFB41D967940266683 /* Caption Peel Icon.icon in Resources */,
 				61B75B40780CB7F8E390FB9F /* LICENSE in Resources */,
 				FABAE2F887BDA66CC36164E6 /* PrivacyInfo.xcprivacy in Resources */,
 			);
@@ -342,7 +354,7 @@
 		73DF8C508BD4F60F86F5A6EA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "Caption Peel Icon";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = CaptionPeel/CaptionPeel.entitlements;
 				CODE_SIGN_STYLE = Automatic;
@@ -352,7 +364,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = CaptionPeel;
-				INFOPLIST_KEY_CFBundleDocumentTypes = "[[\"CFBundleTypeRole\": \"Viewer\", \"LSItemContentTypes\": [\"public.movie\", \"public.mpeg-4\", \"com.apple.quicktime-movie\"], \"CFBundleTypeName\": \"Video\", \"LSHandlerRank\": \"Alternate\"]]";
+				INFOPLIST_KEY_CFBundleDocumentTypes = "[[\"CFBundleTypeName\": \"Video\", \"CFBundleTypeRole\": \"Viewer\", \"LSHandlerRank\": \"Alternate\", \"LSItemContentTypes\": [\"public.movie\", \"public.mpeg-4\", \"com.apple.quicktime-movie\"]]]";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2026 Fly Media LLC";
@@ -373,7 +385,7 @@
 		96286EB1F6505F423DD4F8ED /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "Caption Peel Icon";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = CaptionPeel/CaptionPeel.entitlements;
 				CODE_SIGN_STYLE = Automatic;
@@ -383,7 +395,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = CaptionPeel;
-				INFOPLIST_KEY_CFBundleDocumentTypes = "[[\"CFBundleTypeRole\": \"Viewer\", \"LSItemContentTypes\": [\"public.movie\", \"public.mpeg-4\", \"com.apple.quicktime-movie\"], \"CFBundleTypeName\": \"Video\", \"LSHandlerRank\": \"Alternate\"]]";
+				INFOPLIST_KEY_CFBundleDocumentTypes = "[[\"CFBundleTypeName\": \"Video\", \"CFBundleTypeRole\": \"Viewer\", \"LSHandlerRank\": \"Alternate\", \"LSItemContentTypes\": [\"public.movie\", \"public.mpeg-4\", \"com.apple.quicktime-movie\"]]]";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2026 Fly Media LLC";

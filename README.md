@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="docs/icon.png" width="128" height="128" alt="CaptionPeel">
-</p>
-
 # CaptionPeel
 
 Turn burned-in video captions into an editable SRT file — entirely on your Mac.
@@ -17,7 +13,7 @@ CaptionPeel is a Fly Media project. It requires macOS 15 or later and runs on Ap
 - Native SwiftUI interface and AVFoundation video playback
 - Moveable, resizable caption-region selection that stays aligned at any window size
 - Local Apple Vision OCR tuned for Latin-script subtitles, including Swiss German characters
-- Change-aware sampling that avoids unnecessary OCR work while retaining real presentation timestamps
+- Change-aware sampling with frame-accurate cue boundaries and less unnecessary OCR
 - Editable cue text and start/end times
 - Seek on selection, delete, merge, and re-read individual cues
 - Optional partial-video scan range
@@ -57,7 +53,7 @@ Or run the **CaptionPeel** scheme's tests in Xcode with ⌘U.
 
 ## How extraction works
 
-CaptionPeel samples only the selected caption area. A small luminance fingerprint detects meaningful visual changes, and Vision OCR runs only when needed, with periodic verification for gradual transitions. Neighboring OCR observations are compared by edit-distance similarity so small recognition variations become one stable cue rather than duplicates.
+CaptionPeel samples only the selected caption area. A small luminance fingerprint detects meaningful visual changes, and Vision OCR runs only when needed, with periodic verification for gradual transitions. When the visible caption changes, CaptionPeel narrows the transition to the source video’s individual frames before writing the cue boundary. Neighboring OCR observations are compared by edit-distance similarity so small recognition variations become one stable cue rather than duplicates.
 
 Vision language correction is deliberately disabled to preserve visible spellings instead of rewriting Swiss German into Standard German. OCR lives behind the small `OCRRecognizing` protocol so another fully local engine can be added without replacing the extraction or interface layers.
 
