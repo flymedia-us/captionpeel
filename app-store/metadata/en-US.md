@@ -9,7 +9,9 @@ Copy these values into the macOS version in App Store Connect.
 - Version: `1.0.0`
 - Build: `1` (increase this before every new upload)
 - Copyright: `© 2026 Fly Media LLC`
-- Privacy Policy URL: `https://github.com/flymedia-us/captionpeel/blob/main/docs/privacy-policy.md`
+- Marketing URL: `https://apps.flymedia.us/captionpeel/`
+- Support URL: `https://apps.flymedia.us/captionpeel/support/`
+- Privacy Policy URL: `https://apps.flymedia.us/captionpeel/privacy/`
 
 ## Promotional text
 
