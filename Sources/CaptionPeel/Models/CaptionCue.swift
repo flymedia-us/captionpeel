@@ -40,6 +40,7 @@ struct NormalizedRect: Equatable, Sendable {
 struct ExtractionProgress: Sendable {
     enum Phase: String, Sendable {
         case preparing = "Preparing video"
+        case preparingVision = "Preparing Apple Vision"
         case scanning = "Scanning captions"
         case finishing = "Finishing"
     }

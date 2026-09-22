@@ -53,7 +53,7 @@ Or run the **CaptionPeel** scheme's tests in Xcode with ⌘U.
 
 ## How extraction works
 
-CaptionPeel samples only the selected caption area. A small luminance fingerprint detects meaningful visual changes, and Vision OCR runs only when needed, with periodic verification for gradual transitions. When the visible caption changes, CaptionPeel narrows the transition to the source video’s individual frames before writing the cue boundary. Neighboring OCR observations are compared by edit-distance similarity so small recognition variations become one stable cue rather than duplicates.
+CaptionPeel makes one forward `AVAssetReader` pass through the video. A tiny luminance fingerprint is computed from every decoded frame in the selected caption area, while Vision OCR runs only for visual changes and periodic verification. Cue boundaries use the decoded frame’s real presentation timestamp, avoiding both quarter-second blind spots and repeated exact random seeks. Neighboring OCR observations are compared by edit-distance similarity so small recognition variations become one stable cue rather than duplicates.
 
 Vision language correction is deliberately disabled to preserve visible spellings instead of rewriting Swiss German into Standard German. OCR lives behind the small `OCRRecognizing` protocol so another fully local engine can be added without replacing the extraction or interface layers.
 

@@ -34,6 +34,31 @@ final class ExtractionIntegrationTests: XCTestCase {
         XCTAssertEqual(cues[1].end, 5, accuracy: 0.05)
     }
 
+    func testSequentialScanCapturesBriefCaptionBetweenLegacySamplePoints() async throws {
+        let videoURL = FileManager.default.temporaryDirectory
+            .appendingPathComponent("CaptionPeel-Brief-\(UUID().uuidString).mp4")
+        defer { try? FileManager.default.removeItem(at: videoURL) }
+
+        // This 0.2 s caption lies entirely between 0.25 s sample points. The
+        // previous seek-based scanner could never observe it.
+        try await SyntheticCaptionVideo.write(
+            to: videoURL,
+            framesPerSecond: 30,
+            duration: 2
+        ) { time in
+            (time >= 1.033 && time < 1.233) ? "Grüezi" : nil
+        }
+
+        let engine = CaptionExtractionEngine(videoURL: videoURL)
+        let cues = try await engine.extract(region: .suggestedCaptionRegion) { _ in }
+
+        guard let cue = cues.first(where: { $0.text.localizedCaseInsensitiveContains("Grüezi") }) else {
+            return XCTFail("Expected the brief caption to be extracted; got \(cues.map(\.text))")
+        }
+        XCTAssertEqual(cue.start, 1.033, accuracy: 0.05)
+        XCTAssertEqual(cue.end, 1.233, accuracy: 0.05)
+    }
+
     func testClientClipWhenProvided() async throws {
         guard let path = ProcessInfo.processInfo.environment["CAPTIONPEEL_CLIENT_FIXTURE"] else {
             throw XCTSkip("Set CAPTIONPEEL_CLIENT_FIXTURE to run the private client-clip smoke test.")
@@ -59,6 +84,26 @@ private enum SyntheticCaptionVideo {
     static let height = 720
 
     static func write(to url: URL) async throws {
+        let captions: [String?] = [
+            nil,
+            "Grüezi mitenand",
+            "Grüezi mitenand",
+            "S'isch guet",
+            "S'isch guet",
+            nil,
+            nil,
+        ]
+        try await write(to: url, framesPerSecond: 1, duration: captions.count) { time in
+            captions[min(Int(time), captions.count - 1)]
+        }
+    }
+
+    static func write(
+        to url: URL,
+        framesPerSecond: Int,
+        duration: Int,
+        captionAt: (TimeInterval) -> String?
+    ) async throws {
         let writer = try AVAssetWriter(outputURL: url, fileType: .mp4)
         let input = AVAssetWriterInput(
             mediaType: .video,
@@ -86,22 +131,14 @@ private enum SyntheticCaptionVideo {
         }
         writer.startSession(atSourceTime: .zero)
 
-        let captions: [String?] = [
-            nil,
-            "Grüezi mitenand",
-            "Grüezi mitenand",
-            "S'isch guet",
-            "S'isch guet",
-            nil,
-            nil,
-        ]
-
-        for (second, caption) in captions.enumerated() {
+        for frameIndex in 0..<(duration * framesPerSecond) {
             while !input.isReadyForMoreMediaData {
                 try await Task.sleep(for: .milliseconds(5))
             }
+            let time = Double(frameIndex) / Double(framesPerSecond)
+            let caption = captionAt(time)
             guard let buffer = makePixelBuffer(caption: caption),
-                  adaptor.append(buffer, withPresentationTime: CMTime(seconds: Double(second), preferredTimescale: 600)) else {
+                  adaptor.append(buffer, withPresentationTime: CMTime(seconds: time, preferredTimescale: 600)) else {
                 throw writer.error ?? NSError(domain: "CaptionPeelTests", code: 3)
             }
         }

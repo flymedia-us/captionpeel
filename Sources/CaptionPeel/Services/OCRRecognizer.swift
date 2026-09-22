@@ -1,4 +1,5 @@
 import CoreGraphics
+import CoreVideo
 import Foundation
 import Vision
 
@@ -11,10 +12,52 @@ struct OCRResult: Sendable {
 
 protocol OCRRecognizing: Sendable {
     func recognizeText(in image: CGImage) async throws -> OCRResult
+    func recognizeText(in pixelBuffer: CVPixelBuffer, region: NormalizedRect) async throws -> OCRResult
+}
+
+extension OCRRecognizing {
+    /// Non-Vision recognizers can retain the original CGImage-only integration.
+    /// The extraction engine will crop an image and retry when this is thrown.
+    func recognizeText(in pixelBuffer: CVPixelBuffer, region: NormalizedRect) async throws -> OCRResult {
+        throw OCRRecognitionError.directFrameUnsupported
+    }
+}
+
+enum OCRRecognitionError: Error {
+    case directFrameUnsupported
 }
 
 final class VisionOCRRecognizer: OCRRecognizing, @unchecked Sendable {
     func recognizeText(in image: CGImage) async throws -> OCRResult {
+        try await recognizeText { request in
+            let handler = VNImageRequestHandler(cgImage: image, options: [:])
+            try handler.perform([request])
+        }
+    }
+
+    /// Vision can inspect the selected rectangle in the decoded buffer directly.
+    /// This avoids allocating a full-resolution CGImage just to crop it for OCR.
+    /// Vision's region-of-interest coordinate system, like the Core Graphics crop
+    /// path this replaces, has its origin at the lower left.
+    func recognizeText(in pixelBuffer: CVPixelBuffer, region: NormalizedRect) async throws -> OCRResult {
+        let selection = region.clamped()
+        let buffer = SendablePixelBuffer(pixelBuffer)
+        let visionRegion = CGRect(
+            x: selection.x,
+            y: selection.y,
+            width: selection.width,
+            height: selection.height
+        )
+        return try await recognizeText { request in
+            request.regionOfInterest = visionRegion
+            let handler = VNImageRequestHandler(cvPixelBuffer: buffer.value, options: [:])
+            try handler.perform([request])
+        }
+    }
+
+    private func recognizeText(
+        perform: @escaping @Sendable (VNRecognizeTextRequest) throws -> Void
+    ) async throws -> OCRResult {
         try await withCheckedThrowingContinuation { continuation in
             DispatchQueue.global(qos: .userInitiated).async {
                 do {
@@ -24,8 +67,7 @@ final class VisionOCRRecognizer: OCRRecognizing, @unchecked Sendable {
                     request.usesLanguageCorrection = false
                     request.minimumTextHeight = 0.025
 
-                    let handler = VNImageRequestHandler(cgImage: image, options: [:])
-                    try handler.perform([request])
+                    try perform(request)
 
                     let observations = (request.results ?? [])
                         .compactMap { observation -> (String, Float, CGRect)? in
@@ -52,5 +94,14 @@ final class VisionOCRRecognizer: OCRRecognizing, @unchecked Sendable {
                 }
             }
         }
+    }
+}
+
+/// Retains the Core Video buffer while Vision processes it on its worker queue.
+private final class SendablePixelBuffer: @unchecked Sendable {
+    let value: CVPixelBuffer
+
+    init(_ value: CVPixelBuffer) {
+        self.value = value
     }
 }

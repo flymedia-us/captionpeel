@@ -149,11 +149,26 @@ private struct ProcessingView: View {
                     Text(model.extractionProgress.phase.rawValue)
                         .fontWeight(.medium)
                     Spacer()
-                    Text(model.extractionProgress.fraction, format: .percent.precision(.fractionLength(0)))
-                        .monospacedDigit()
-                        .foregroundStyle(.secondary)
+                    if model.extractionProgress.phase == .preparingVision {
+                        Text("Starting…")
+                            .foregroundStyle(.secondary)
+                    } else {
+                        Text(model.extractionProgress.fraction, format: .percent.precision(.fractionLength(1)))
+                            .monospacedDigit()
+                            .foregroundStyle(.secondary)
+                    }
                 }
-                ProgressView(value: model.extractionProgress.fraction)
+                if model.extractionProgress.phase == .preparingVision {
+                    ProgressView()
+                } else {
+                    ProgressView(value: model.extractionProgress.fraction)
+                }
+                if model.extractionProgress.phase == .scanning {
+                    Text("Scanned \(Timecode.string(from: model.extractionProgress.currentTime, decimalSeparator: ".")) of \(Timecode.string(from: model.extractionProgress.duration, decimalSeparator: "."))")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
                 HStack {
                     Text("Processing locally with Apple Vision")
                         .font(.caption)
