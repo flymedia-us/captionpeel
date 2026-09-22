@@ -2,6 +2,15 @@ import XCTest
 @testable import CaptionPeel
 
 final class CaptionPeelTests: XCTestCase {
+    func testVisionRegionFlipsTopLeftSelectionToVisionCoordinates() {
+        let region = VisionOCRRecognizer.visionRegion(for: .init(x: 0.12, y: 0.68, width: 0.76, height: 0.21))
+
+        XCTAssertEqual(region.minX, 0.12, accuracy: 0.0001)
+        XCTAssertEqual(region.minY, 0.11, accuracy: 0.0001)
+        XCTAssertEqual(region.width, 0.76, accuracy: 0.0001)
+        XCTAssertEqual(region.height, 0.21, accuracy: 0.0001)
+    }
+
     func testSRTTimecodeFormattingRoundsToMilliseconds() {
         XCTAssertEqual(Timecode.string(from: 3_661.2346), "01:01:01,235")
         XCTAssertEqual(Timecode.string(from: -1), "00:00:00,000")

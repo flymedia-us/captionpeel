@@ -37,22 +37,32 @@ final class VisionOCRRecognizer: OCRRecognizing, @unchecked Sendable {
 
     /// Vision can inspect the selected rectangle in the decoded buffer directly.
     /// This avoids allocating a full-resolution CGImage just to crop it for OCR.
-    /// Vision's region-of-interest coordinate system, like the Core Graphics crop
-    /// path this replaces, has its origin at the lower left.
+    ///
+    /// `NormalizedRect` is expressed in the player/CGImage coordinate system:
+    /// its origin is at the top left. Vision's region of interest is normalized
+    /// from the lower left, so the vertical origin must be flipped. Omitting this
+    /// conversion makes a user-selected caption band scan its mirror image (for
+    /// example, a watermark at the top of the video instead of captions below).
     func recognizeText(in pixelBuffer: CVPixelBuffer, region: NormalizedRect) async throws -> OCRResult {
-        let selection = region.clamped()
         let buffer = SendablePixelBuffer(pixelBuffer)
-        let visionRegion = CGRect(
-            x: selection.x,
-            y: selection.y,
-            width: selection.width,
-            height: selection.height
-        )
+        let visionRegion = Self.visionRegion(for: region)
         return try await recognizeText { request in
             request.regionOfInterest = visionRegion
             let handler = VNImageRequestHandler(cvPixelBuffer: buffer.value, options: [:])
             try handler.perform([request])
         }
+    }
+
+    /// Converts CaptionPeel's top-left-origin selection into Vision's
+    /// lower-left-origin normalized region of interest.
+    static func visionRegion(for region: NormalizedRect) -> CGRect {
+        let selection = region.clamped()
+        return CGRect(
+            x: selection.x,
+            y: 1 - selection.y - selection.height,
+            width: selection.width,
+            height: selection.height
+        )
     }
 
     private func recognizeText(
